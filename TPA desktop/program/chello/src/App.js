@@ -7,7 +7,12 @@ import SignUp from './pages/SignUp';
 import Account from './pages/Account';
 import Navbar from './pages/Navbar';
 import FormEx from './pages/FormEx';
-import AuthContextProvider from './context/AuthContext';
+// import AuthContextProvider from './context/AuthContext';
+import RegisterPage from './pages/RegisterPage';
+import { UserAuthContextProvider } from './context/AuthContext';
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/SideBar';
+import MainLayout from './pages/MainLayout';
 
 
 function App() {
@@ -23,19 +28,23 @@ function App() {
       <Login></Login> */}
       {/* <h1 className='text-center text-3xl font-bold'>Firebase Auth</h1> */}
 
-      <AuthContextProvider>
-      <Routes>
-         <Route path='/Login' element={
-         <div>
-           <Login></Login>
-         </div>
-         }></Route>
-         <Route path='/SignUp' element={<SignUp></SignUp>}></Route>
-         <Route path='/Account' element={<Account></Account>}></Route>
-         <Route path='/form' element={<FormEx></FormEx>}></Route>
-      </Routes>
-
-      </AuthContextProvider>
+      {/* <AuthContextProvider> */}
+        <UserAuthContextProvider>
+          <Routes>
+            {/* <Route path='/Login' element={
+            <div>
+              <Login></Login>
+            </div>
+            }></Route> */}
+            <Route path='register' element={<RegisterPage/>}/>
+            <Route path='login' element={<LoginPage/>}/>
+            <Route path='chello/*' element={<MainLayout/>}/>
+            {/* <Route path='/SignUp' element={<SignUp></SignUp>}></Route> */}
+            {/* <Route path='/Account' element={<Account></Account>}></Route> */}
+            {/* <Route path='/form' element={<FormEx></FormEx>}></Route> */}
+          </Routes>
+        </UserAuthContextProvider>
+      {/* </AuthContextProvider> */}
     </div>
    
   );
