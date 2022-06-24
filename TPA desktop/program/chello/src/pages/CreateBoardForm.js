@@ -1,30 +1,28 @@
 import { addDoc, collection } from "firebase/firestore"
 import { useRef } from "react"
-import { useUserAuth } from "../context/AuthContext"
 import { db } from "../firebase"
 
-const CreateWorkspaceForm = () => {
+const CreateBoardForm = () => {
     const titleRef = useRef()
-    const publicRef = useRef()
+    const visRef = useRef()
 
-    const {user} = useUserAuth()
-
-    function createWorkspace(title, vis) {
-        const workspaceColRef = collection(db, "workspace")
+    async function createBoard(title, visibility) {
+        const boardColRef = collection(db, "board")
         const data = {
             title: title,
-            public: vis
+            visibility: visibility
         }
-        addDoc(workspaceColRef, data)
+        const res = await addDoc(boardColRef, data)
+        return res
     }
 
-    function handleCreateWorkspace() {
+    function handleCreateBoard() {
         const title = titleRef.current.value
-        const visibility = publicRef.current.value === "on" ? true : false
-        createWorkspace(title, visibility)
+        const vis = visRef.current.value
+        createBoard(title, vis)
     }
 
-    return (
+    return(
         <div>
            <div className="form-control">
                 <label className="label">
@@ -35,14 +33,18 @@ const CreateWorkspaceForm = () => {
             <div className="form-control">
                 <label className="label cursor-pointer">
                     <span className="label-text">Public</span>
-                    <input ref={publicRef} type="checkbox" className="toggle toggle-primary" defaultChecked />
+                    <select ref={visRef} class="select select-primary w-full max-w-xs">
+                        <option defaultChecked>Public</option>
+                        <option>Workspace</option>
+                        <option>Private</option>
+                    </select>
                 </label>
             </div>
             <div className="form-control mt-6">
-                <button onClick={handleCreateWorkspace} className="btn btn-primary">Register</button>
+                <button onClick={handleCreateBoard} className="btn btn-primary">Register</button>
             </div>
         </div>
     )
 }
 
-export default CreateWorkspaceForm
+export default CreateBoardForm

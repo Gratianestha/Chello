@@ -1,4 +1,4 @@
-const ModalPage = ({content, target}) => {
+const ModalContent = ({content, target}) => {
     return (
         <div>
             <input type="checkbox" id="my-modal-4" className="modal-toggle" />
@@ -11,4 +11,4 @@ const ModalPage = ({content, target}) => {
     )
 }
 
-export default ModalPage
+export default ModalContent
