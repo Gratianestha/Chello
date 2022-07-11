@@ -49,7 +49,7 @@ const CreateWorkspaceForm = () => {
                 </label>
             </div>
             <div className="form-control mt-6">
-                <button onClick={handleCreateWorkspace} className="btn btn-primary">Register</button>
+                <button onClick={handleCreateWorkspace} className="btn btn-primary">Continue</button>
             </div>
         </div>
     )

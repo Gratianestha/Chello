@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { Link, Navigate } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import { useUserAuth } from "../context/AuthContext"
 
 
@@ -8,13 +8,15 @@ const LoginPage = () => {
     const passRef = useRef()
 
     const {login} = useUserAuth()
+    const navigate = useNavigate()
 
     function handleLogin() {
         const email = emailRef.current.value
         const pass = passRef.current.value
         login(email, pass).then(() => {
             console.log("asdasd");
-            <Navigate to={"/chello/home"} replace={true}/>
+            // <Navigate to={"/"} replace={true}/>
+            navigate("/chello/");
         })
     }
 

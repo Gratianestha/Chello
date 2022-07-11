@@ -1,78 +1,6 @@
-import { useEffect, useState, useRef, Fragment} from "react";
-import { db } from "../firebase";
-import Loading from "./Loading";
-import Card from "./Card";
-import { Link } from "react-router-dom";
-import { Transition, Dialog } from "@headlessui/react"
-import { useUserAuth } from "../context/AuthContext"
-import { addDoc, arrayUnion, collection, onSnapshot , doc, updateDoc } from "firebase/firestore"
+<<MODEL POP UP INVITE>>
 
-
-const HomePage =() => {
-    const [isPending, setPending] = useState(true)
-    const [workspaces, setWorkspace] = useState([])
-
-    const workspaceColRef = collection(db, "workspace")
-    console.log('asd')
-    useEffect(() => {
-    console.log("tes")
-        const unsub = onSnapshot(workspaceColRef, (data) => {
-            setWorkspace(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
-            setPending(false)
-        })
-
-        return unsub
-    }, [])
-
-    //CREATE WORKSPACE
-    const titleRef = useRef()
-    const publicRef = useRef()
-
-    const {user} = useUserAuth()
-
-    async function addRefToUser(wsid) {
-        const userDocRef = doc(db, "user", user.uid)
-        const data = { admin: arrayUnion(wsid)}
-        const res = await updateDoc(userDocRef, data)
-        return res
-    }
-
-    function createWorkspace(title, vis) {
-        const workspaceColRef = collection(db, "workspace")
-        const data = {
-            title: title,
-            public: vis
-        }
-        addDoc(workspaceColRef, data)
-            .then((docRef) => {
-                addRefToUser(docRef.id)
-            })
-    }
-
-    function handleCreateWorkspace() {
-        const title = titleRef.current.value
-        const visibility = publicRef.current.value === "on" ? true : false
-        createWorkspace(title, visibility)
-    }
-
-
-
-
-    const [open, setOpen] = useState(false)
-    const cancelButtonRef = useRef(null)
-    return (
-        <div>
-
-        <div className=" flex-col w-[90%] h-64">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setOpen(true)}>
-            Create Workspace
-            </button>
-            {isPending ? <Loading/> : 
-                <ContentWorkspace ws={workspaces}/>
-            }
-            {/* <CreateWorkspaceForm /> */}
-        </div>
-        <Transition.Root show={open} as={Fragment}>
+<Transition.Root show={open} as={Fragment}>
                 <Dialog
                     as="div"
                     className="fixed z-10 inset-0 overflow-y-auto"
@@ -117,14 +45,15 @@ const HomePage =() => {
                                                 x
                                             </button>
                                             <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                                                Create Your Workspace!
+                                                Invite your team
                                             </Dialog.Title>
                                             <Dialog.Description className="py-3">
-                                                Trello makes teamwork your best work. Create your workspace and choose your member!
+                                                Trello makes teamwork your best work. Invite your new team members to get going!
                                             </Dialog.Description>
 
                                             <div className="mt-0.5 pt-2 pb-4">
-                                                <div className=" mb-1">
+                                                <div>
+                                                <div className="mt-1">
                                                         <input
                                                             id="titleWk"
                                                             name="titleWk"
@@ -136,20 +65,12 @@ const HomePage =() => {
                                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                                             
                                                         />
-                                                            <div className="form-control">
-                                                            <label className="label cursor-pointer">
-                                                                <span className="label-text">Public</span>
-                                                                <input ref={publicRef} type="checkbox" className="toggle toggle-primary" defaultChecked />
-                                                            </label>
-                                                        </div>
                                                     </div>
-                                                    <p className="block text-sm font-medium text-gray-700">Choose your member</p>
-                                                <div className=" mt-2">
-                                                    {/* <label htmlFor="linkInv" className="block text-sm font-medium text-gray-700">
-                                                        
-                                                    </label> */}
+                                                    <label htmlFor="linkInv" className="block text-sm font-medium text-gray-700">
+                                                        Share this Workspace with a link
+                                                    </label>
                                                     <button className="block text-sm font-medium text-gray-700 underline">
-                                                    Share this Workspace with a link
+                                                        Create Link
                                                     </button>
                                                     <div className="mt-1">
                                                         <input
@@ -203,20 +124,3 @@ const HomePage =() => {
                     </div>
                 </Dialog>
             </Transition.Root>
-
-        </div>
-    )
-}
-
-const ContentWorkspace = ({ws}) => {
-    return(
-        <div className="flex flex-wrap">
-
-            {ws.map((ws) => {
-                return <Link to={"/chello/workspace/" + ws.id} key={ws.id}><Card title={ws.title} key={ws.id}/></Link>
-            })}
-        </div>
-    )
-}
-
-export default HomePage
