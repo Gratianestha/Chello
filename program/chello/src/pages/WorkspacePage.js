@@ -1,4 +1,4 @@
-import { doc, getDoc, onSnapshot, collection, addDoc, arrayUnion, updateDoc, query, where } from "firebase/firestore"
+import { doc, getDoc, onSnapshot, collection, addDoc, arrayUnion, updateDoc, query, where, arrayRemove } from "firebase/firestore"
 import { Fragment, useEffect, useState, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { db } from "../firebase"
@@ -306,25 +306,31 @@ const ContentBoard = ({b, ws}) => {
     )
 }
 
+const RemoveMember = async (mem) =>{
+    const userRef = doc(db, "user", mem.id)
+    // console.log(mem)
+    await updateDoc(userRef,{
+        member:arrayRemove(id)
+    })
+}
+
 const ContentMember = ({mem}) => {
     return(
         <div className="flex flex-wrap">
-            {mem.map((mem) => {
+            {mem.map((m) => {
                 // const path = window.btoa("workspace/" + ws.id + "/board/" + b.id)
-                return <Card title={mem.username} key={mem.id}>
+                return (
+                <div>
+                <Card title={m.username} key={m.id}/>
                 
-                </Card>
+                        <button onClick={()=>RemoveMember(m)}>Remove</button>
+                </div>)
             })}
         </div>
     )
 }
 
-// const memberWk = ()=>
-//     return(
-//         <div>
 
-//         </div>
-//     )
 
 
 export default WorkspacePage
