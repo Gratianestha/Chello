@@ -9,6 +9,7 @@ import { UserAuthContextProvider } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 
 import MainLayout from './pages/MainLayout';
+import InvitedPage from './pages/invitedPage';
 
 
 function App() {
@@ -33,8 +34,10 @@ function App() {
             </div>
             }></Route> */}
             <Route path='/' element={<RegisterPage/>}/>
-            <Route path='login' element={<LoginPage/>}/>
+            <Route path='/login' element={<LoginPage/>}/>
+            <Route path='/login/:docId' element={<LoginPage/>}/>
             <Route path='/chello/*' element={<MainLayout/>}/>
+            <Route path='/invited/:docId' element={<InvitedPage/>}/>
 
 
             {/* <Route path='/SignUp' element={<SignUp></SignUp>}></Route> */}

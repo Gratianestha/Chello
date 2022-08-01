@@ -1,12 +1,12 @@
 import { useRef } from "react"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
 import { useUserAuth } from "../context/AuthContext"
 
 
 const LoginPage = () => {
     const emailRef = useRef()
     const passRef = useRef()
-
+    const {docId} = useParams()
     const {login} = useUserAuth()
     const navigate = useNavigate()
 
@@ -16,9 +16,16 @@ const LoginPage = () => {
         login(email, pass).then(() => {
             console.log("asdasd");
             // <Navigate to={"/"} replace={true}/>
-            navigate("/chello/");
+            if(docId==undefined){
+                navigate("/chello/");
+            }
+            else{
+                navigate(`/invited/${docId}`)
+            }
         })
     }
+
+
 
     return(
         <div className="hero min-h-screen bg-base-200">

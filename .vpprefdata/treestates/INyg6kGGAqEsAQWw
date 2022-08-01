@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ProjectTreeState projectID="C.LHroGAUFEkRgBO" projectPath="D:\TPA\Chello\diagram-GH.vpp">
+<ProjectTreeState projectID="C.LHroGAUFEkRgBO" projectPath="C:\Users\LENOVO\Downloads\gratiaDiagram\gratiaDiagram\diagram-GH\diagram-GH.vpp">
 	<TreeState name="ModelRepository" viewX="0" viewY="0"/>
-	<TreeState name="DiagramNavigator" viewX="0" viewY="108">
+	<TreeState name="DiagramNavigator" viewX="0" viewY="0">
 		<ExpandedPath>DiagramNavigator</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,UML Diagrams</ExpandedPath>
-		<ExpandedPath>UseCaseDiagram</ExpandedPath>
+		<ExpandedPath>ClassDiagram</ExpandedPath>
+		<ExpandedPath>InteractionDiagram</ExpandedPath>
 		<ExpandedPath>ActivityDiagram</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,Requirements Capturing</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,Database Modeling</ExpandedPath>
@@ -23,7 +24,7 @@
 		<ExpandedPath>DiagramNavigator,Network Design</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,General</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,Others</ExpandedPath>
-		<SelectedPath>ActivityDiagram,9fPLoYGAUFE8IBuZ</SelectedPath>
+		<SelectedPath>InteractionDiagram,.m3LJYGAUFEu.gqr</SelectedPath>
 	</TreeState>
 	<TreeState name="ClassBrowser" viewX="0" viewY="0"/>
 	<TreeState name="LogicalView" viewX="0" viewY="0"/>

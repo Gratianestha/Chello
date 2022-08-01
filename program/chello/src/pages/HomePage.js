@@ -2,40 +2,83 @@ import { useEffect, useState, useRef, Fragment} from "react";
 import { db } from "../firebase";
 import Loading from "./Loading";
 import Card from "./Card";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Transition, Dialog } from "@headlessui/react"
 import { useUserAuth } from "../context/AuthContext"
-import { addDoc, arrayUnion, collection, onSnapshot , doc, updateDoc } from "firebase/firestore"
+import { addDoc, arrayUnion, collection, onSnapshot , doc, updateDoc, getDocs, getDoc, query, where } from "firebase/firestore"
 
 
 const HomePage =() => {
     const [isPending, setPending] = useState(true)
     const [workspaces, setWorkspace] = useState([])
+    const [userId, setId]  = useState("");
+    const [load, setLoad]  = useState(true);
+    const {user} = useUserAuth()
+    const [userData, setUserData] = useState(null)
+
 
     const workspaceColRef = collection(db, "workspace")
     console.log('asd')
     useEffect(() => {
-    console.log("tes")
-        const unsub = onSnapshot(workspaceColRef, (data) => {
-            setWorkspace(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+        // const unsub =
+        onSnapshot(workspaceColRef, (data) => {
+            // setWorkspace(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+            let workspace = []
+            data.docs.forEach((doc) => {workspace.push({...doc.data(), id: doc.id})})
+            setWorkspace(workspace)
+            console.log("tes")
+            console.log(workspace)
             setPending(false)
         })
 
-        return unsub
+        
+        // getDoc(doc(db, "user", user.uid))
+        // .then((doc) =>{
+        //     let user = doc.data();
+        //     setUser(user)
+        //     // setLoad(false)
+        // })
+
+        onSnapshot(query(collection(db, 'user')),
+        (snapshot)=>{
+            let temp
+            snapshot.docs.forEach((doc)=>{
+                if (doc.id === user.uid) {
+                    temp = {
+                        ...doc.data(),
+                        id: doc.id
+                    }
+                }
+            })
+
+            setUserData(temp)
+        })
+        // return unsub
+        
     }, [])
 
     //CREATE WORKSPACE
     const titleRef = useRef()
     const publicRef = useRef()
+    
+    
 
-    const {user} = useUserAuth()
+    // useEffect(()=>{
+    //     // if(userData!=undefined){
+    //     //     setLoad(false)
+    //     // }
+        
+    //     setId(query(collection(db, 'user'), where("member", 'array-contains', workspaces.id)))
+    // },[workspaces])
 
     async function addRefToUser(wsid) {
         const userDocRef = doc(db, "user", user.uid)
-        const data = { admin: arrayUnion(wsid)}
+        const data = { admin: arrayUnion(wsid), member:arrayUnion(wsid)}
         const res = await updateDoc(userDocRef, data)
         return res
     }
+
+
 
     function createWorkspace(title, vis) {
         const workspaceColRef = collection(db, "workspace")
@@ -54,21 +97,26 @@ const HomePage =() => {
         const visibility = publicRef.current.value === "on" ? true : false
         createWorkspace(title, visibility)
     }
-
-
-
+    
 
     const [open, setOpen] = useState(false)
     const cancelButtonRef = useRef(null)
     return (
         <div>
 
+            <h1>Home</h1> 
+            <Link to={"/chello/profile/"} key={userData}><h1>Profile</h1></Link>
+            <Link to={"/chello/closedBoards/"}><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setOpen(true)}>
+            ClosedBoards
+            </button>
+            </Link>
         <div className=" flex-col w-[90%] h-64">
+            
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setOpen(true)}>
             Create Workspace
             </button>
             {isPending ? <Loading/> : 
-                <ContentWorkspace ws={workspaces}/>
+                <ContentWorkspace ws={workspaces} user={userData}/>
             }
             {/* <CreateWorkspaceForm /> */}
         </div>
@@ -208,12 +256,13 @@ const HomePage =() => {
     )
 }
 
-const ContentWorkspace = ({ws}) => {
+const ContentWorkspace = ({ws, user}) => {
     return(
         <div className="flex flex-wrap">
 
             {ws.map((ws) => {
-                return <Link to={"/chello/workspace/" + ws.id} key={ws.id}><Card title={ws.title} key={ws.id}/></Link>
+                if(user!==undefined && user!==null) console.log(user.member.includes(ws.id));
+                if(user!==undefined && user!==null && user.member.includes(ws.id)) return <Link to={"/chello/workspace/" + ws.id} key={ws.id}><Card title={ws.title} key={ws.id}/></Link>
             })}
         </div>
     )

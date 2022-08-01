@@ -12,7 +12,8 @@ let mainWindow;
 
 function createWindow() {
 
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({width: 800, height: 600,
+        icon: 'public/logo.ico'});
 
     mainWindow.loadURL('http://localhost:3000');
 
@@ -26,6 +27,16 @@ function createWindow() {
         mainWindow = null
     })
 }
+app.setUserTasks([
+    {
+        program: process.execPath,
+        arguments: '--new-window',
+        iconPath: process.execPath,
+        iconIndex: 0,
+        title: 'New Window',
+        description: 'Create a new window'
+    }
+])
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -48,3 +59,4 @@ app.on('activate', function () {
         createWindow()
     }
 });
+
