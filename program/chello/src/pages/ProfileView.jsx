@@ -84,7 +84,7 @@ export default function Profile(){
           {({ open }) => (
             <>
               <div>
-                <Menu.Button className="inline-flex justify-center w-full rounded-md border border-blue-300 shadow-sm px-4 py-2 bg-blue-300 text-sm font-medium text-gray-700 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500">
+                <Menu.Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                   {notification}
                   <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
                 </Menu.Button>
@@ -161,7 +161,7 @@ export default function Profile(){
         <p className="text-white">t</p>
         <Link
             to="/chello/"
-            className="mx-4 group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#262626] hover:bg-[#404040] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
             >
             back to home
         </Link>
@@ -171,7 +171,7 @@ export default function Profile(){
             <div className="max-w-md w-full space-y-8">
                 <div>
                 
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Profile</h2>
+                <h2 className="mt-6 text-center text-2xl  text-gray-900">Profile</h2>
                 
                 </div>
                 <div className="mt-8 space-y-6">
@@ -181,7 +181,7 @@ export default function Profile(){
                     <div>
                         <div className="flex item-center mt-4">
                             <label htmlFor="email-address" className="my-2 block text-sm font-medium text-gray-700">
-                                UserName
+                                Username
                             </label>
 
                             <button 
@@ -189,8 +189,8 @@ export default function Profile(){
                                 setChange(true);
                                 setSubject("Username");
                             }}
-                            className="mx-4 mb-4 group relative py-1 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                change
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                                Edit
                             </button>
                         </div>
                         <p
@@ -210,8 +210,8 @@ export default function Profile(){
                                 setChange(true);
                                 setSubject("Email");
                             }}
-                            className="mx-4 mb-4 group relative py-1 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                change
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                                Edit
                             </button>
                         </div>
                         <p
@@ -225,7 +225,7 @@ export default function Profile(){
                             setChange(true);
                             setSubject("password");
                         }}
-                        className="my-4 mb-4 group relative py-1 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#16a34a] hover:bg-[#15803d] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                             change password
                         </button>
 
